@@ -77,7 +77,7 @@ export async function getApi() {
     });
 
     const mealServiceInfoResponse = await fetch(`${BASE_URL_MEAL}?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolcode}&MLSV_YMD=${date}`).then((res) => res.json());
-    console.log("확인", mealServiceInfoResponse.mealServiceDietInfo[1]);
+    console.log("확인", mealServiceInfoResponse.mealServiceDietInfo[1].row[0]);
 
     const mealData = mealServiceInfoResponse.mealServiceDietInfo && mealServiceInfoResponse.mealServiceDietInfo[1]?.row && mealServiceInfoResponse.mealServiceDietInfo[1].row[0]?.DDISH_NM ? mealServiceInfoResponse.mealServiceDietInfo[1].row[0].DDISH_NM : "";
 

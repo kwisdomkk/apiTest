@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { getApi } from "./api";
+import Calendar from './calendar';
 
 function App() {
   useEffect(() => {
@@ -11,7 +12,9 @@ function App() {
     fetchData();
   }, []);
 
-  return <div>api 테스트</div>;
+  return <div>api 테스트
+    <Calendar/>
+  </div>;
 }
 
 export default App;
