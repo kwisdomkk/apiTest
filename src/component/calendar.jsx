@@ -1,14 +1,11 @@
-// import React, { useState } from 'react';
-// import '../asset/style.css';
+// import React, { useState } from "react";
+// import "../asset/style.css";
 
 // function Calendar() {
 //   const [year, setYear] = useState(new Date().getFullYear());
 //   const [month, setMonth] = useState(new Date().getMonth());
 
-//   const months = [
-//     "1월", "2월", "3월", "4월", "5월", "6월",
-//     "7월", "8월", "9월", "10월", "11월", "12월"
-//   ];
+//   const months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 
 //   const renderCalendar = () => {
 //     let datesHtml = "";
@@ -23,11 +20,7 @@
 //     }
 
 //     for (let i = 1; i <= endDate; i++) {
-//       let className = (
-//         i === new Date().getDate() &&
-//         month === new Date().getMonth() &&
-//         year === new Date().getFullYear()
-//       ) ? 'today' : '';
+//       let className = i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear() ? "today" : "";
 //       datesHtml += `<li className="${className}">${i}</li>`;
 //     }
 
@@ -36,7 +29,7 @@
 //     }
 
 //     return datesHtml;
-//   }
+//   };
 
 //   // const handleNavClick = (direction) => {
 //   //   if (direction === 'prev' && month === 0) {

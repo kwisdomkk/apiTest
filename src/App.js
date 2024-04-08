@@ -7,7 +7,7 @@ function App() {
       const data = await getApi();
       console.log(data);
     }
-    
+
     fetchData();
   }, []);
 
