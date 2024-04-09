@@ -1,20 +1,22 @@
 import { useEffect } from "react";
-import { getApi } from "./api";
-import Calendar from './calendar';
+import { getMealInfo } from "./api";
+import Calendar from "./calendar";
 
 function App() {
   useEffect(() => {
     async function fetchData() {
-      const data = await getApi();
-      console.log(data);
+      const data = await getMealInfo();
+      console.log("전체값", data);
     }
 
     fetchData();
   }, []);
 
-  return <div>api 테스트
-    <Calendar/>
-  </div>;
+  return (
+    <div className="flex justify-center mt-[50px]">
+      <Calendar />
+    </div>
+  );
 }
 
 export default App;

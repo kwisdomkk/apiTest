@@ -50,13 +50,11 @@ let noFood = {
   19: "잣",
 };
 
-export async function getApi() {
+// 학교 정보를 가져오는 함수
+export async function getSchoolInfo() {
   try {
     const officeCode = location["서울"];
-    const schoolNM = "휘봉고등학교";
-    let schoolcode = "";
     let allSchoolInfo = [];
-
     while (true) {
       const schoolInfoResponse = await fetch(`${BASE_URL_SCHOOL}?KEY=${API_KEY}&Type=json&pindex=${pIndex}&pSize=${pSize}&ATPT_OFCDC_SC_CODE=${officeCode}`).then((res) => res.json());
 
@@ -70,31 +68,56 @@ export async function getApi() {
       pIndex++; // 페이지 인덱스 증가
     }
 
+    let schoolcode = "";
     allSchoolInfo.forEach((item) => {
-      if (item.SCHUL_NM === schoolNM) {
+      if (item.SCHUL_NM === "휘봉고등학교") {
         schoolcode = item.SD_SCHUL_CODE;
       }
     });
 
+    // console.log(schoolcode);
+    return schoolcode;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// 식단 정보를 가져오는 함수
+export async function getMealInfo() {
+  try {
+    const schoolcode = 7011113;
+    const officeCode = location["서울"];
     const mealServiceInfoResponse = await fetch(`${BASE_URL_MEAL}?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolcode}&MLSV_YMD=${date}`).then((res) => res.json());
-    console.log("확인", mealServiceInfoResponse.mealServiceDietInfo[1].row[0]);
+
+    const allmeal = mealServiceInfoResponse.mealServiceDietInfo[1].row;
 
     const mealData = mealServiceInfoResponse.mealServiceDietInfo && mealServiceInfoResponse.mealServiceDietInfo[1]?.row && mealServiceInfoResponse.mealServiceDietInfo[1].row[0]?.DDISH_NM ? mealServiceInfoResponse.mealServiceDietInfo[1].row[0].DDISH_NM : "";
 
     const str = mealData.split("(");
     const arr = str.map((item) => item.split(/[).<br/>]/));
     const arr2 = arr.flatMap((item) => item).filter((item) => !isNaN(item) && item !== "");
-    // console.log("식단", arr2);
 
     const allergylist = arr2.map((item) => noFood[item]);
-    const allergy = [...new Set(allergylist)]; //중복제거
-    // console.log("알러지", allergylist);
+    const allergy = [...new Set(allergylist)]; // 중복제거
 
     return {
-      schoolInfo: schoolcode,
       mealServiceInfo: allergy,
+      mealData: allmeal,
     };
   } catch (error) {
     console.log(error);
+  }
+}
+
+//선택날짜 식단
+export async function getMealForDate(selectedDate) {
+  console.log("선택 날짜", selectedDate);
+  try {
+    const apiData = await getMealInfo();
+    const mealDataForDate = apiData.mealData.find((item) => item.MLSV_YMD === selectedDate);
+    const mealData = mealDataForDate ? mealDataForDate.DDISH_NM : "";
+    return mealData;
+  } catch (error) {
+    console.log("선택날짜 식단 에러", error);
   }
 }

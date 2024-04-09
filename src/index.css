@@ -1,13 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.react-calendar {
+  width: 600px !important;
+  height: 550px;
+}
+.react-calendar__navigation {
+  margin-top: 20px;
+}
+.react-calendar__month-view {
+  width: 500px;
+  margin: 0 auto;
+}
+.react-calendar__month-view button {
+  height: 90px;
+}
+
+/* @media screen and (max-width: 768px) {
+  .react-calendar {
+    width: 400px !important;
+    height: 400px;
+  }
+  .react-calendar__month-view {
+    width: 400px;
+  }
+  .react-calendar__month-view button {
+    height: 50px;
+  }
+} */
+
+html {
+  background-color: white !important;
 }
