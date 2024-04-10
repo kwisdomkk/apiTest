@@ -106,7 +106,7 @@ export async function getMealInfo() {
     };
   } catch (error) {
     console.log(error);
-  }
+  } 
 }
 
 //선택날짜 식단
@@ -116,7 +116,17 @@ export async function getMealForDate(selectedDate) {
     const apiData = await getMealInfo();
     const mealDataForDate = apiData.mealData.find((item) => item.MLSV_YMD === selectedDate);
     const mealData = mealDataForDate ? mealDataForDate.DDISH_NM : "";
-    return mealData;
+    const str = mealData.split("(");
+    const arr = str.map((item) => item.split(/[).<br/>]/));
+    const arr2 = arr.flatMap((item) => item).filter((item) => !isNaN(item) && item !== "");
+    const allergylist = arr2.map((item) => noFood[item]);
+    const allergy = [...new Set(allergylist)];
+    const mealCountry=mealDataForDate? mealDataForDate.ORPLC_INFO : "";
+    return {
+      mealData,
+      mealCountry,allergy
+    };
+
   } catch (error) {
     console.log("선택날짜 식단 에러", error);
   }

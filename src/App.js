@@ -13,7 +13,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex justify-center mt-[50px]">
+    <div >
       <Calendar />
     </div>
   );

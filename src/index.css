@@ -14,27 +14,41 @@ code {
 }
 
 .react-calendar {
-  width: 600px !important;
-  height: 550px;
+  width: 90% !important;
+  margin: 0 auto;
 }
 .react-calendar__navigation {
   margin-top: 20px;
 }
 .react-calendar__month-view {
-  width: 500px;
+  width: 90%;
   margin: 0 auto;
 }
 .react-calendar__month-view button {
   height: 90px;
 }
 
-/* @media screen and (max-width: 768px) {
+/* 
+@media screen and (max-width: 768px) {
   .react-calendar {
-    width: 400px !important;
-    height: 400px;
+    width: 500px !important;
+    height: 380px;
   }
   .react-calendar__month-view {
     width: 400px;
+  }
+  .react-calendar__month-view button {
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .react-calendar {
+    width: 330px !important;
+    height: 370px;
+  }
+  .react-calendar__month-view {
+    width: 300px;
   }
   .react-calendar__month-view button {
     height: 50px;
