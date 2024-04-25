@@ -54,23 +54,19 @@ let noFood = {
 export async function getSchoolInfo() {
   try {
     const officeCode = location["서울"];
-    let allSchoolInfo = [];
-    while (true) {
-      const schoolInfoResponse = await fetch(`${BASE_URL_SCHOOL}?KEY=${API_KEY}&Type=json&pindex=${pIndex}&pSize=${pSize}&ATPT_OFCDC_SC_CODE=${officeCode}`).then((res) => res.json());
+    const allSchoolInfo = [];
+
+    for (let i = 1; i <= 2; i++) {
+      const schoolInfoResponse = await fetch(`${BASE_URL_SCHOOL}?KEY=${API_KEY}&Type=json&pindex=${i}&pSize=${pSize}&ATPT_OFCDC_SC_CODE=${officeCode}`).then((res) => res.json());
 
       const schoolarr = schoolInfoResponse.schoolInfo && schoolInfoResponse.schoolInfo.length > 1 ? schoolInfoResponse.schoolInfo[1]?.row || [] : [];
 
-      if (schoolarr.length === 0) {
-        break;
-      }
-
-      allSchoolInfo = allSchoolInfo.concat(schoolarr); // 데이터 합치기
-      pIndex++; // 페이지 인덱스 증가
+      allSchoolInfo.push(...schoolarr);
     }
 
     let schoolcode = "";
     allSchoolInfo.forEach((item) => {
-      if (item.SCHUL_NM === "휘봉고등학교") {
+      if (item.SCHUL_NM === "휘문중학교") {
         schoolcode = item.SD_SCHUL_CODE;
       }
     });
@@ -89,6 +85,7 @@ export async function getMealInfo() {
     const officeCode = location["서울"];
     const mealServiceInfoResponse = await fetch(`${BASE_URL_MEAL}?KEY=${API_KEY}&Type=json&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolcode}&MLSV_YMD=${date}`).then((res) => res.json());
 
+    //전체 식단
     const allmeal = mealServiceInfoResponse.mealServiceDietInfo[1].row;
 
     const mealData = mealServiceInfoResponse.mealServiceDietInfo && mealServiceInfoResponse.mealServiceDietInfo[1]?.row && mealServiceInfoResponse.mealServiceDietInfo[1].row[0]?.DDISH_NM ? mealServiceInfoResponse.mealServiceDietInfo[1].row[0].DDISH_NM : "";
@@ -106,7 +103,7 @@ export async function getMealInfo() {
     };
   } catch (error) {
     console.log(error);
-  } 
+  }
 }
 
 //선택날짜 식단
@@ -116,17 +113,19 @@ export async function getMealForDate(selectedDate) {
     const apiData = await getMealInfo();
     const mealDataForDate = apiData.mealData.find((item) => item.MLSV_YMD === selectedDate);
     const mealData = mealDataForDate ? mealDataForDate.DDISH_NM : "";
+
     const str = mealData.split("(");
     const arr = str.map((item) => item.split(/[).<br/>]/));
     const arr2 = arr.flatMap((item) => item).filter((item) => !isNaN(item) && item !== "");
     const allergylist = arr2.map((item) => noFood[item]);
     const allergy = [...new Set(allergylist)];
-    const mealCountry=mealDataForDate? mealDataForDate.ORPLC_INFO : "";
+
+    const mealCountry = mealDataForDate ? mealDataForDate.ORPLC_INFO : "";
     return {
       mealData,
-      mealCountry,allergy
+      mealCountry,
+      allergy,
     };
-
   } catch (error) {
     console.log("선택날짜 식단 에러", error);
   }

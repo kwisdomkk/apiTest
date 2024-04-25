@@ -1,19 +1,19 @@
 import { useEffect } from "react";
-import { getMealInfo } from "./api";
+import { getSchoolInfo } from "./api";
 import Calendar from "./calendar";
 
 function App() {
   useEffect(() => {
     async function fetchData() {
-      const data = await getMealInfo();
-      console.log("전체값", data);
+      const data = await getSchoolInfo();
+      console.log("학교코드", data);
     }
 
     fetchData();
   }, []);
 
   return (
-    <div >
+    <div>
       <Calendar />
     </div>
   );

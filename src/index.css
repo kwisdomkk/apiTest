@@ -16,6 +16,7 @@ code {
 .react-calendar {
   width: 90% !important;
   margin: 0 auto;
+  border-radius: 0 !important;
 }
 .react-calendar__navigation {
   margin-top: 20px;
@@ -27,7 +28,11 @@ code {
 .react-calendar__month-view button {
   height: 90px;
 }
-
+/* .react-calendar__tile--active {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+} */
 /* 
 @media screen and (max-width: 768px) {
   .react-calendar {
